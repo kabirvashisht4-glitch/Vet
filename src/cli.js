@@ -10,7 +10,7 @@ import { explainTests } from './explainTests.js';
 import { runTests } from './runTests.js';
 import { scoreReport } from './scoreReport.js';
 import { toJson } from './toJson.js';
-import { findExitProblems, EXIT_PROBLEMS_FOUND, EXIT_VET_FAILED } from './exitStatus.js';
+import { findExitProblems, parseMinScore, EXIT_PROBLEMS_FOUND, EXIT_VET_FAILED } from './exitStatus.js';
 import { printReport, printElapsedTime } from './report.js';
 import { printTestSection } from './printTestReport.js';
 import { printScore } from './printScore.js';
@@ -30,10 +30,22 @@ export async function runCli(argv) {
     .argument('<url>', 'GitHub repository URL, e.g. https://github.com/owner/repo')
     .option('--no-tests', "don't run the repo's tests (running them executes the repo's code on your machine)")
     .option('--json', 'print the full report as JSON instead of text')
+    .option('--min-score <number>', 'exit with code 1 if the overall score is below this number (0 to 10)')
     .parse(argv);
 
   const [url] = program.args;
-  await vetRepository(url, program.opts());
+  const options = program.opts();
+
+  // Checked before cloning, so a typo fails instantly instead of after a long run.
+  try {
+    options.minScore = parseMinScore(options.minScore);
+  } catch (error) {
+    console.error(picocolors.red(error.message));
+    process.exitCode = EXIT_VET_FAILED;
+    return;
+  }
+
+  await vetRepository(url, options);
 }
 
 async function vetRepository(url, options) {
@@ -64,7 +76,7 @@ async function vetRepository(url, options) {
 }
 
 function finishReport(report, options, startTime) {
-  const problems = findExitProblems(report);
+  const problems = findExitProblems(report, options.minScore);
   if (problems.length > 0) {
     process.exitCode = EXIT_PROBLEMS_FOUND;
   }

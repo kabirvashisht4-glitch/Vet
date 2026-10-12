@@ -78,6 +78,7 @@ Vet score: 8.5 / 10 — Looks healthy and well kept
 |--------|--------------|
 | `--no-tests` | Don't run the repo's tests (they still get listed). |
 | `--json` | Print the whole report as JSON on standard output, for scripts and CI. Progress goes to stderr. |
+| `--min-score <number>` | Exit with code 1 if the overall score is below this number (0 to 10), so CI can reject low-scoring repos. |
 | `--version` | Print vet's version. |
 
 Set `GITHUB_TOKEN` to raise GitHub's API limit from 60 to 5,000 requests an
@@ -88,8 +89,8 @@ hour. Vet needs 4 per repo, so this only matters if you vet many repos.
 | Code | Meaning |
 |------|---------|
 | `0` | No broken links, and all test commands passed. |
-| `1` | Broken links or failing test commands were found, so CI can fail the build. |
-| `2` | Vet itself couldn't run (a bad URL, or the clone failed). |
+| `1` | Broken links, failing test commands, or a score below `--min-score` were found, so CI can fail the build. |
+| `2` | Vet itself couldn't run (a bad URL, an invalid `--min-score`, or the clone failed). |
 
 ### Where the checks come from
 
