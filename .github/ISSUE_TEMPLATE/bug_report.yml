@@ -1,0 +1,46 @@
+name: Bug report
+description: Something in vet doesn't work the way it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! The more exact you are, the faster it gets fixed.
+        If you found a security problem, please don't post it here. See SECURITY.md.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you see instead?
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: The command you ran
+      description: Include the repo URL if it's public, so we can reproduce it.
+      placeholder: vet https://github.com/owner/repo --no-tests
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output or error message
+      description: Copy the text, don't use a screenshot. It's fine to trim long output.
+      render: text
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of `vet --version`, `node --version` and `git --version`.
+      placeholder: vet 0.1.0, node v22.1.0, git 2.45.0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [macOS, Linux, Windows, Windows with WSL, Other]
+    validations:
+      required: true

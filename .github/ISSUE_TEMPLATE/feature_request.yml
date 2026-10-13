@@ -1,0 +1,29 @@
+name: Feature request
+description: Suggest a new check, option or improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the situation, not only the solution. Who runs into it, and when?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like vet to do?
+      description: A rough example of the command or the report output helps a lot.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Anything else you tried?
+      description: Other tools or workarounds, and why they fall short.
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Want to build it?
+      options:
+        - label: I'd like to work on this myself (I'll comment here first so we don't double up)
