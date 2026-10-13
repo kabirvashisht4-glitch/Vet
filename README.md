@@ -18,15 +18,41 @@ In one run it tells you:
 
 It then sums it all up as one **score out of 10**.
 
+## Requirements
+
+- **Node.js 20 or newer**
+- **git**, because vet clones the repo it checks into a temporary folder
+- **To run a repo's tests**, that repo's own tools (for example `npm` for
+  JavaScript, `python3` for Python, `go`, `cargo`). If one is missing, vet says
+  so and carries on. Running tests goes through `sh`, so it's built for macOS
+  and Linux (on Windows, use WSL, or pass `--no-tests`). Windows hasn't been
+  tested yet.
+
 ## Install
 
+Try it without installing anything:
+
 ```bash
+npx github:kabirvashisht4-glitch/Vet https://github.com/owner/repo
+```
+
+Install it so you can type `vet` anywhere:
+
+```bash
+npm install -g github:kabirvashisht4-glitch/Vet
+```
+
+Or work on it from a clone:
+
+```bash
+git clone https://github.com/kabirvashisht4-glitch/Vet.git
+cd Vet
 npm install
 npm link
 ```
 
-`npm link` puts the `vet` command on your PATH so you can run it from
-anywhere.
+`npm link` puts the `vet` command on your PATH. Check it worked with
+`vet --version`.
 
 ## Usage
 

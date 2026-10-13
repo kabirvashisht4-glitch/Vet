@@ -1,20 +1,43 @@
 {
   "name": "vet",
   "version": "0.1.0",
-  "description": "Vet a GitHub repository: detect its languages and find broken links in its docs.",
+  "description": "Vet a GitHub repository before you depend on it: health, security, license, docs and tests in one report.",
+  "keywords": [
+    "github",
+    "repository",
+    "health-check",
+    "link-checker",
+    "license",
+    "security",
+    "openssf-scorecard",
+    "cli"
+  ],
+  "author": "Kabir Vashisht",
+  "license": "MIT",
+  "homepage": "https://github.com/kabirvashisht4-glitch/Vet#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kabirvashisht4-glitch/Vet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kabirvashisht4-glitch/Vet/issues"
+  },
   "type": "module",
   "bin": {
     "vet": "./bin/vet.js"
   },
   "main": "src/cli.js",
+  "files": [
+    "bin",
+    "src"
+  ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "scripts": {
     "start": "node bin/vet.js",
     "test": "node --test test/*.test.js"
   },
-  "license": "MIT",
   "dependencies": {
     "commander": "^12.0.0",
     "picocolors": "^1.0.0"
