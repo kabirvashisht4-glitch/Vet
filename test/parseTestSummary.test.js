@@ -47,3 +47,25 @@ test('ignores terminal colors', () => {
 test('returns null for output with no known summary', () => {
   assert.equal(parseTestSummary('hello world\nall good'), null);
 });
+
+for (const prefix of ['#', 'ℹ']) {
+  test(`reads Node test runner totals with ${prefix} prefix`, () => {
+    const output = ['tests 62', 'suites 0', 'pass 60', 'fail 1', 'cancelled 0', 'skipped 1', 'todo 0']
+      .map((line) => `${prefix} ${line}`).join('\n');
+    assert.deepEqual(parseTestSummary(output), { passed: 60, failed: 1, skipped: 1 });
+  });
+}
+
+test('counts Node todo tests as skipped and cancelled tests as failed', () => {
+  const output = '# tests 6\n# pass 1\n# fail 1\n# cancelled 2\n# skipped 1\n# todo 1';
+  assert.deepEqual(parseTestSummary(output), { passed: 1, failed: 3, skipped: 2 });
+});
+
+test('reads empty Node test runs', () => {
+  assert.deepEqual(parseTestSummary('ℹ tests 0\nℹ pass 0\nℹ fail 0\nℹ skipped 0'),
+    { passed: 0, failed: 0, skipped: 0 });
+});
+
+test('does not mistake arbitrary TAP comments for a Node summary', () => {
+  assert.equal(parseTestSummary('# pass 2\n# tests are useful'), null);
+});

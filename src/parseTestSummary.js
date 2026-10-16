@@ -8,6 +8,7 @@ const SUMMARY_READERS = [
   readPytestSummary,
   readRspecSummary,
   readMochaSummary,
+  readNodeSummary,
   readGoSummary,
 ];
 
@@ -78,6 +79,17 @@ function readMochaSummary(text) {
   if (!resultLines) return null;
   const pendingLines = text.match(/^\s*\d+ pending\b.*$/gm) || [];
   return sumWordCounts([...resultLines, ...pendingLines]);
+}
+
+// Node's TAP and spec reporters put the label before the count.
+function readNodeSummary(text) {
+  if (!/^[#ℹ] tests \d+\s*$/m.test(text)) return null;
+  const buckets = { pass: 'passed', fail: 'failed', cancelled: 'failed', skipped: 'skipped', todo: 'skipped' };
+  const counts = { passed: 0, failed: 0, skipped: 0 };
+  for (const match of text.matchAll(/^[#ℹ] (pass|fail|cancelled|skipped|todo) (\d+)\s*$/gm)) {
+    counts[buckets[match[1]]] += Number(match[2]);
+  }
+  return counts;
 }
 
 // go test -v: one unindented "--- PASS: TestName" line per top-level test
