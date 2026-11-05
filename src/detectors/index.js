@@ -8,5 +8,6 @@ import rust from './rust.js';
 import java from './java.js';
 import php from './php.js';
 import csharp from './csharp.js';
+import kotlin from './kotlin.js';
 
-export const detectors = [javascript, python, go, ruby, rust, java, php, csharp];
+export const detectors = [javascript, python, go, ruby, rust, java, php, csharp, kotlin];
